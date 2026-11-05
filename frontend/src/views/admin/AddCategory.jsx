@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import API from '../../api/axios';
 import './AddCategory.css';
 import { toast } from 'react-toastify';
 
@@ -31,7 +31,7 @@ const AddCategory = () => {
     try {
       setLoading(true);
 
-      const response  = await axios.post('/admin/add-category', {
+      const response  = await API.post('/admin/add-category', {
         name: trimmedName,
         description: trimmedDescription,
       });
