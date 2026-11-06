@@ -27,7 +27,7 @@ const AddCategory = () => {
       setError('Category name must be at least 2 characters');
       return;
     }
-
+ 
     try {
       setLoading(true);
 

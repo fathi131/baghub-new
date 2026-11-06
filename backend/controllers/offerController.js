@@ -25,6 +25,24 @@ const buildOfferFields = async (payload) => {
     throw error;
   }
 
+  if (discountType === 'percentage' && discountValue >= 100) {
+    const error = new Error('Percentage discount cannot be 100% or more.');
+    error.status = 400;
+    throw error;
+  }
+
+  if (discountType === 'fixed' && discountValue >= 5000) {
+    const error = new Error('Flat discount cannot exceed ₹5000.');
+    error.status = 400;
+    throw error;
+  }
+
+  if (discountType === 'percentage' && maxDiscount > 0 && maxDiscount > discountValue) {
+    const error = new Error('Max discount cannot be greater than the discount value.');
+    error.status = 400;
+    throw error;
+  }
+
   const start = new Date(startDate);
   const expiry = new Date(expiryDate);
   if (!startDate || !expiryDate || Number.isNaN(start.getTime()) || Number.isNaN(expiry.getTime())) {
