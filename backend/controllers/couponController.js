@@ -57,6 +57,14 @@ const createCoupon = async (req, res) => {
     if (parsedDiscountValue <= 0) {
       return res.status(400).json({ success: false, message: 'Discount value must be greater than zero.' });
     }
+    
+    if (discountType === 'percentage' && parsedDiscountValue >= 100) {
+      return res.status(400).json({ success: false, message: 'Percentage discount cannot be 100% or more.' });
+    }
+
+    if (discountType === 'fixed' && parsedDiscountValue >= 5000) {
+      return res.status(400).json({ success: false, message: 'Flat discount cannot exceed ₹5000.' });
+    }
 
     const coupon = await Coupon.create({
       code: normalizedCode,
